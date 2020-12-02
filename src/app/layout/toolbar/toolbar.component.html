@@ -1,0 +1,27 @@
+<mat-toolbar color="accent" fxLayout="row"  *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="onNavToggle()">menu</mat-icon>
+    </button>
+    <h1>Tech-Q</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="'/accounts'"> Accounts </a>
+      <a mat-button [routerLink]="'/requests/service'"> Service Requests </a>
+      <a mat-button [routerLink]="'/requests/quote'"> Quote Requests </a>
+      <a mat-button [routerLink]="'/pending'"> Pending </a>
+      <a mat-button [routerLink]="'/onhold'"> On Hold </a>
+      <a mat-button [routerLink]="'/processed'"> Processed </a>
+    </div>
+    <span fxFlex></span>
+    <div fxFlexAlign="end center">
+      <button mat-button [matMenuTriggerFor]="profileMenu" *ngIf="isLoggedIn"> <mat-icon>account_circle</mat-icon> {{'John Doe'}}</button>
+      <mat-menu #profileMenu="matMenu" yPosition="below">
+        <button mat-menu-item>My Profile</button>
+        <button mat-menu-item>Preferences</button>
+        <button mat-menu-item (click)="singOut()">Signout</button>
+      </mat-menu>
+      <a mat-button [routerLink]="'/requests/service'" matTooltip="Help"> <mat-icon>help</mat-icon> help </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,14 @@
+{
+    "name": "triton",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "start": "node app"
+    },
+    "main": "app.js",
+    "private": true,
+    "dependencies": {
+        "express": "*",
+        "path": "*"
+    }
+}
