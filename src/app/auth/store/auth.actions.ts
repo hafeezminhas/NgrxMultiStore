@@ -1,5 +1,5 @@
 import { Action, createReducer, on, createAction, props } from '@ngrx/store';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { Credentials } from './../models/user';
 import { User } from './../../auth/models/user';
@@ -10,15 +10,18 @@ export enum AuthActionTypes {
   LOGIN_FAILURE = '[Auth] Login Failure',
   LOGIN_SUCCESS = '[Auth] Login Success',
   UPDATE_TOKEN  = '[Auth] Update Token',
-  UPDATE_PROFILE = '[Auth] Update Token',
+  APPLY_PROFILE = '[Auth] Apply Token',
+  LOAD_PROFILE =  '[Auth] Load Token',
   REFRESH_TOKEN = '[Auth] Refresh Token',
-  REFRESH_FAILURE = '[Auth] Refresh FAILURE',
-  LOGOUT_ACTION = '[Auth] Logout Action'
+  REFRESH_FAILURE= '[Auth] Refresh FAILURE',
+  LOGOUT_ACTION = '[Auth] Logout Action',
+  REGISTER_USER = '[Auth] Register User'
 }
 
 export class AuthActions {
   public static InitAction = createAction(
-    AuthActionTypes.INIT_AUTH
+    AuthActionTypes.INIT_AUTH,
+    props<{ token: string, refreshToken: string, user: any, isAuthenticated: boolean }>()
   );
 
   public static LoginRequestAction = createAction(
@@ -41,8 +44,13 @@ export class AuthActions {
     props<{ token: string }>()
   );
 
-  public static UpdateProfileAction = createAction(
-    AuthActionTypes.UPDATE_PROFILE,
+  public static LoadProfileAction = createAction(
+    AuthActionTypes.LOAD_PROFILE,
+    props<{ token: string, refreshToken: string, user: any }>()
+  );
+
+  public static ApplyProfileAction = createAction(
+    AuthActionTypes.APPLY_PROFILE,
     props<{ user: any }>()
   );
 
@@ -59,41 +67,9 @@ export class AuthActions {
   public static LogoutAction = createAction(
     AuthActionTypes.LOGOUT_ACTION
   );
+
+  public static RegisterUser = createAction(
+    AuthActionTypes.REGISTER_USER,
+    props<{ success: boolean, message: string }>()
+  );
 }
-
-// export class LoginRequestAction implements Action {
-//   readonly type = AuthActionTypes.LOGIN_REQUEST;
-//   constructor(public payload: { email: string, password: string }) {}
-// }
-
-// export class LoginFailureAction implements Action {
-//   readonly type = AuthActionTypes.LOGIN_FAILURE;
-//   constructor(public payload: { error: string }) {}
-// }
-
-// export class LoginSuccessAction implements Action {
-//   readonly type = AuthActionTypes.LOGIN_SUCCESS;
-//   constructor(public payload: { user: User, token: string, refresh: string, isLoading: boolean }) {}
-// }
-
-// export class UpdateTokenAction implements Action {
-//   readonly type = AuthActionTypes.UPDATE_TOKEN;
-//   constructor(public payload: { token: string }) {}
-// }
-
-// export class RefreshTokenAction implements Action {
-//   readonly type = AuthActionTypes.REFRESH_TOKEN;
-//   constructor(public payload: { refreshToken: string }) {}
-// }
-
-// export class RefreshTokenFailureAction implements Action {
-//   readonly type = AuthActionTypes.REFRESH_FAILURE;
-//   constructor(public payload: { response: HttpErrorResponse }) {}
-// }
-
-// export class LogoutAction implements Action {
-//   readonly type = AuthActionTypes.LOGOUT_ACTION;
-//   constructor() {}
-// }
-
-// export type Actions = LoginRequestAction | LoginFailureAction | LoginSuccessAction | UpdateTokenAction | RefreshTokenAction | LogoutAction;

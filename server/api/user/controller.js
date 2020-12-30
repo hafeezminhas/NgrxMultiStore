@@ -1,4 +1,3 @@
-const { date } = require('joi');
 const jwt = require('jsonwebtoken');
 
 const users = [
@@ -6,18 +5,19 @@ const users = [
     firstname: 'Hafeez',
     lastname: 'Rehman',
     email: 'hafeez@gmail.com',
-    password: 'TestPass'
+    password: 'TestPass',
+    role: 1,
   }, {
     firstname: 'John',
     lastname: 'Doe',
     email: 'jdoe@outlook.com',
-    password: 'TestPass'
+    password: 'TestPass',
+    role: 2
   }
 ];
 
 exports.login = (req, res) => {
-  console.log(req.body);
-  let { email, password } = req.body
+  let { email, password } = req.body;
   let user = users.filter(u => u.email === email);
 
   if(!email || !password) {
@@ -34,9 +34,9 @@ exports.login = (req, res) => {
       return res.boom.unauthorized('Incorrect email or password provided').send()
   }
 
-  const payload = { firstname: user.firstname, lastname: user.lastname, email: email, createdAt: new Date() };
+  const payload = { firstname: user.firstname, lastname: user.lastname, email: email, role: user.role, createdAt: new Date() };
 
-  let accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+  let token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
       algorithm: "HS256",
       expiresIn: process.env.ACCESS_TOKEN_LIFE
   });
@@ -47,5 +47,6 @@ exports.login = (req, res) => {
   });
 
   let result = { ...user, password: null };
-  res.send({ user: result, refreshToken, token: accessToken });
+  delete result.password;
+  res.send({ user: result, refreshToken, token });
 };

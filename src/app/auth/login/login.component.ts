@@ -7,6 +7,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from './../../store/state';
 import { AuthActions } from '../store/auth.actions';
 import { AuthSelectors } from '../store/auth.selectors';
+import { Router } from '@angular/router';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +22,7 @@ export class LoginComponent implements OnInit {
   loading$;
   error$;
 
-  constructor(
-    private store: Store<AppState>,
-    private fb: FormBuilder,
-    private authService: AuthService) {}
+  constructor(private store: Store<AppState>, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({

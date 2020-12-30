@@ -21,12 +21,23 @@ export class AuthEffects {
     private authService: AuthService,
     private store: Store<AppState>) {}
 
+  @Effect({ dispatch: false })
+  init$ = this.actions$.pipe(
+    ofType(AuthActions.InitAction),
+    tap((action: any) => {
+      this.router.navigate(['/dashboard']);
+    })
+  );
+
   @Effect()
   authorize$: Observable<Action> = this.actions$.pipe(
     ofType(AuthActions.LoginRequestAction),
     switchMap((action: any) => {
       return this.authService.login({ email: action.email, password: action.password }).pipe(
-        delay(1000),
+        delay(1500),
+        tap(res => {
+          this.router.navigate(['/dashboard']);
+        }),
         map((response: AuthResponse) => AuthActions.LoginSuccessAction({
             user: response.user,
             token: response.token,
@@ -38,19 +49,17 @@ export class AuthEffects {
     })
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   authSuccess$ = this.actions$.pipe(
     ofType(AuthActions.LoginSuccessAction),
     map((action: any) => {
       localStorage.setItem('token', action.token);
       localStorage.setItem('refresh_token', action.refresh);
-      this.router.navigateByUrl('/customers');
-
-      // return [RefreshProfileAction, UserAuthorizations];
+      this.router.navigateByUrl('/dashboard');
     })
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   unauthorize$ = this.actions$.pipe(
     ofType(AuthActions.LogoutAction),
     map(() => {

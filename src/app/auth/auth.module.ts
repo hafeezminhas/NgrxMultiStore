@@ -1,3 +1,5 @@
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
@@ -16,6 +18,14 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { HttpClientModule } from '@angular/common/http';
 
+const routes: Routes = [
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'resetpassword', component: ResetPasswordComponent },
+  { path: 'forgotpassword', component: ForgotPasswordComponent }
+];
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -27,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     HttpClientModule,
+    RouterModule.forChild(routes),
     EffectsModule.forFeature([AuthEffects]),
     StoreModule.forFeature(authFeatureKey, authReducers),
     MaterialModule

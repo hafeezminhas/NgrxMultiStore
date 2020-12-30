@@ -1,6 +1,12 @@
+import { User } from './../../auth/models/user';
 import { AuthService } from './../../auth/services/auth.service';
+import { AppState } from './../../store/state';
 import { Observable } from 'rxjs';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import * as authStore from '../../auth/store';
+import { NgPopupsService } from 'ng-popups';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,11 +16,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ToolbarComponent implements OnInit {
   @Output() navToggle = new  EventEmitter<any>();
   isLoggedIn$: Observable<boolean>;
+  currentUser$: Observable<User>;
 
-  constructor(private authService: AuthService) { }
+  constructor(private store: Store<AppState>, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.isLoggedIn$ = this.authService.isLoggedIn;
+    this.isLoggedIn$ = this.store.select(authStore.AuthSelectors.isAuthenticated);
+    this.currentUser$ = this.store.select(authStore.AuthSelectors.selectAuthUser);
   }
 
   onNavToggle(): void {
@@ -23,5 +31,7 @@ export class ToolbarComponent implements OnInit {
 
   signIn(): void {}
 
-  singOut(): void {}
+  signOut(): void {
+    this.authService.logout();
+  }
 }

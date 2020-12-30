@@ -1,4 +1,4 @@
-<mat-toolbar color="accent" fxLayout="row"  *ngIf="isLoggedIn$ | async as isLoggedIn">
+<mat-toolbar color="accent" fxLayout="row">
   <mat-toolbar-row>
     <button mat-icon-button>
       <mat-icon (click)="onNavToggle()">menu</mat-icon>
@@ -6,7 +6,7 @@
     <h1>Tech-Q</h1>
     <span class="menu-spacer"></span>
     <div>
-      <a mat-button [routerLink]="'/accounts'"> Accounts </a>
+      <a mat-button [routerLink]="'/dashboard'"> Dashboard </a>
       <a mat-button [routerLink]="'/requests/service'"> Service Requests </a>
       <a mat-button [routerLink]="'/requests/quote'"> Quote Requests </a>
       <a mat-button [routerLink]="'/pending'"> Pending </a>
@@ -15,11 +15,13 @@
     </div>
     <span fxFlex></span>
     <div fxFlexAlign="end center">
-      <button mat-button [matMenuTriggerFor]="profileMenu" *ngIf="isLoggedIn"> <mat-icon>account_circle</mat-icon> {{'John Doe'}}</button>
+      <button mat-button [matMenuTriggerFor]="profileMenu" *ngIf="isLoggedIn$ | async">
+        <mat-icon>account_circle</mat-icon> <span *ngIf="currentUser$ | async as user">{{user.firstname + ' ' + user.lastname}}</span>
+      </button>
       <mat-menu #profileMenu="matMenu" yPosition="below">
         <button mat-menu-item>My Profile</button>
         <button mat-menu-item>Preferences</button>
-        <button mat-menu-item (click)="singOut()">Signout</button>
+        <button mat-menu-item (click)="signOut()">Signout</button>
       </mat-menu>
       <a mat-button [routerLink]="'/requests/service'" matTooltip="Help"> <mat-icon>help</mat-icon> help </a>
     </div>

@@ -1,6 +1,13 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './../../auth/services/auth.service';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidenavComponent } from './sidenav.component';
+import { Store, StoreModule } from '@ngrx/store';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -8,7 +15,16 @@ describe('SidenavComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SidenavComponent ]
+      imports: [
+        RouterTestingModule,
+        NoopAnimationsModule,
+        HttpClientModule,
+        MatSidenavModule,
+        MatListModule,
+        StoreModule.forRoot({}, {})
+      ],
+      declarations: [ SidenavComponent ],
+      providers: [AuthService]
     })
     .compileComponents();
   });

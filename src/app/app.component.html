@@ -1,3 +1,3 @@
-<app-toolbar (navToggle)="sideNavToggle($event)"></app-toolbar>
-<app-sidenav #sidenav></app-sidenav>
-<router-outlet></router-outlet>
+<app-toolbar (navToggle)="sideNavToggle($event)" *ngIf="loggedIn$ | async"></app-toolbar>
+<app-sidenav #sidenav *ngIf="loggedIn$ | async"></app-sidenav>
+<router-outlet *ngIf="!(loggedIn$ | async)"></router-outlet>

@@ -7,7 +7,6 @@ import { BehaviorSubject, of, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 
 import { User, Credentials } from './../models/user';
-import { AuthResponse } from './../models/response';
 import { Store } from '@ngrx/store';
 
 
@@ -18,25 +17,25 @@ const API_PREFIX = 'api';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
-
-  get isLoggedIn(): Observable<boolean> {
-    return this.loggedIn.asObservable();
-  }
-
   constructor(
     private http: HttpClient,
     private router: Router,
     private store: Store<AppState>
-  ) {
-      const token = this.getToken();
-      if (token && !this.isTokenExpired(token)) {
-        localStorage.setItem('token', token);
-        this.store.dispatch(AuthActions.UpdateProfileAction({ user: this.getUserFromToken() }));
-        this.router.navigateByUrl('/customers');
-      } else {
-        this.logout();
-      }
+  ) {}
+
+  init(): void {
+    const token = this.getToken();
+    if (token && !this.isTokenExpired(token)) {
+      this.router.navigateByUrl('/dashboard');
+      this.store.dispatch(AuthActions.InitAction({
+        token: localStorage.getItem('token'),
+        refreshToken: localStorage.getItem('refresh_token'),
+        user: this.getUserFromToken(),
+        isAuthenticated: true
+      }));
+    } else {
+      this.logout();
+    }
   }
 
   login(cred: Credentials): Observable<any> {
@@ -51,8 +50,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.loggedIn.next(false);
-    this.router.navigate(['/login']);
+    this.store.dispatch(AuthActions.LogoutAction());
+    this.router.navigate(['/']);
   }
 
   getToken(): string {
@@ -90,6 +89,7 @@ export class AuthService {
     if (date === undefined) {
       return false;
     }
-    return !(date.valueOf() > new Date().valueOf());
+
+    return (new Date().valueOf() > date.valueOf());
   }
 }

@@ -1,3 +1,7 @@
+import { SharedModule } from './shared/shared.module';
+import { MaterialModule } from './material/material.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { HomeModule } from './home/home.module';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -15,9 +19,26 @@ import { AuthInterceptor } from './auth/interceptors/auth-interceptor';
 
 import * as fromApp from './store';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgPopupsGlobalConfig, NgPopupsModule } from 'ng-popups';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+const ngxPopupsConfig: NgPopupsGlobalConfig = {
+  theme: 'material',
+  okButtonText: 'Yes',
+  cancelButtonText: 'No',
+  color: '#8030c3',
+  titles: {
+    alert: 'Danger!',
+    confirm: 'Confirmation',
+    prompt: 'Website asks...'
+  }
+};
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    NotFoundComponent
+   ],
   imports: [
     BrowserModule,
     RouterModule,
@@ -25,9 +46,14 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     StoreModule.forRoot(fromApp.reducers),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    AppRoutingModule,
+    NgPopupsModule.forRoot(ngxPopupsConfig),
+    MaterialModule,
+    SharedModule,
+    AuthModule,
     LayoutModule,
-    AuthModule
+    HomeModule,
+    DashboardModule,
+    AppRoutingModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

@@ -18,7 +18,7 @@ export class UnAuthGuard implements CanActivate {
       select(AuthSelectors.isAuthenticated),
       map((isAuth) => {
         if (isAuth) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/']);
         }
 
         return !isAuth;

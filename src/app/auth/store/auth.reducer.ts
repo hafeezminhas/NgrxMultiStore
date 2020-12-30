@@ -8,6 +8,15 @@ export const initialState: AuthState = new AuthState();
 const reducer = createReducer(
   initialState,
 
+  on(AuthActions.InitAction, (state, action) => ({
+    ...state,
+    token: action.token,
+    refreshToken: action.refreshToken,
+    user: action.user,
+    isAuthenticated: true,
+    isLoading: false
+  })),
+
   on(AuthActions.LoginRequestAction, (state, action) => ({
     ...state,
     isLoading: true
@@ -24,6 +33,7 @@ const reducer = createReducer(
     user: action.user,
     token: action.token,
     isRefreshing: false,
+    isAuthenticated: true,
     error: null,
     isLoading: false
   })),
@@ -33,7 +43,14 @@ const reducer = createReducer(
     isRefreshing: true
   })),
 
-  on(AuthActions.UpdateProfileAction, (state, action) => ({
+  on(AuthActions.LoadProfileAction, (state, action) => ({
+    ...state,
+    token: action.token,
+    refreshToken: action.refreshToken,
+    user: action.user
+  })),
+
+  on(AuthActions.ApplyProfileAction, (state, action) => ({
     ...state,
     user: action.user
   })),
