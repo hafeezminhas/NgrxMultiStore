@@ -13,9 +13,17 @@
 #home-header > .container {
   height: auto;
 }
-.hometop-btn:hover ::ng-deep .mat-button-focus-overlay {
-  display: none;
+
+.hometop-btn {
+  background-color: transparent;
+  font-size: 1rem;
+  font-weight: normal !important;
+
+  &:hover ::ng-deep .mat-button-focus-overlay {
+    display: none;
+  }
 }
+
 #home-header:not(.header-fixed) .hometop-btn ::ng-deep .mat-button-ripple {
   top: -22px;
   bottom: -22px;

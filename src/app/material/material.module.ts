@@ -1,3 +1,4 @@
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [],
@@ -29,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -37,6 +40,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatSelectModule,
     MatSidenavModule,
     MatTableModule,
     MatToolbarModule,
@@ -50,6 +54,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -58,6 +63,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatSelectModule,
     MatSidenavModule,
     MatTableModule,
     MatToolbarModule,

@@ -14,9 +14,9 @@
           <mat-icon color="default">check</mat-icon><span fxFlex="20px"></span> Remote diagnosis available while you self-isolate</div>
       </div>
       <div fxLayout="row" fxLayout.lt-sm="column">
-        <button mat-raised-button mat-lg-button color="primary" (click)="getQuote()"><mat-icon>add_shopping_cart</mat-icon> Request Quote</button>
+        <button mat-raised-button mat-lg-button color="info" (click)="getQuote()" matTooltip="Request Quote"><mat-icon>request_quote</mat-icon> Quote</button>
         <span fxFlex="20px"></span>
-        <button mat-raised-button mat-lg-button id="frontend-btn" (click)="createRequest()"><mat-icon>get_app</mat-icon> Create Request </button>
+        <button mat-raised-button mat-lg-button color="default" (click)="createRequest()" matTooltip="Request Service"><mat-icon>question_answer</mat-icon> Request </button>
       </div>
     </div>
     <span fxFlex.lt-md="30px" fxFlex="0"></span>

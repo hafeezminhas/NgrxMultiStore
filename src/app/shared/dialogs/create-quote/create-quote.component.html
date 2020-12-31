@@ -1,0 +1,72 @@
+<div class="dialog-wrapper py-12">
+  <h2 mat-dialog-title> Request A Quote </h2>
+
+  <mat-dialog-content>
+
+      <form class="py-20"
+            fxLayout="row wrap"
+            fxLayoutAlign="start"
+            [formGroup]="form"
+            (ngSubmit)="onSubmit()"
+            autocomplete="off">
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100" class="mb-20" *ngIf="error">
+              <div class="error-message"><img src="assets/images/icons/error.png" width="20" alt=""> {{error}}</div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <mat-form-field appearance="outline" fxFlex="100" class="py-4">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category" (valueChange)="onCatSelect($event)" required>
+                    <mat-option *ngFor="let c of categories" [value]="c.key"> {{c.value}} </mat-option>
+                </mat-select>
+                <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <mat-form-field appearance="outline" fxFlex="100" class="py-4">
+                <mat-label>Quote Type</mat-label>
+                <mat-select formControlName="type" (valueChange)="onTypeSelect($event)" required>
+                    <mat-option *ngFor="let t of types" [value]="t.value"> {{t.key}} </mat-option>
+                </mat-select>
+                <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <mat-form-field appearance="outline" fxFlex="100" class="py-4">
+                <mat-label>Item Make</mat-label>
+                <mat-select formControlName="make" (valueChange)="onTypeSelect($event)" required>
+                    <mat-option *ngFor="let t of types" [value]="t.value"> {{t.key}} </mat-option>
+                </mat-select>
+                <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
+            <mat-form-field appearance="outline" fxFlex="100" class="py-4">
+                <mat-label>Item Model</mat-label>
+                <mat-select formControlName="model" (valueChange)="onTypeSelect($event)" required>
+                    <mat-option *ngFor="let t of types" [value]="t.value"> {{t.key}} </mat-option>
+                </mat-select>
+                <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="100" fxLayoutGap="5px">
+            <mat-form-field appearance="outline" class="pr-4" fxFlex="100">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+          </div>
+
+      </form>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayoutAlign="end">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Save</button>
+      <button mat-raised-button color="primary" (click)="close()">Close</button>
+  </mat-dialog-actions>
+</div>

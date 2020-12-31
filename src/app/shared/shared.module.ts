@@ -1,3 +1,7 @@
+import { MatDialogModule } from '@angular/material/dialog';
+import { MaterialModule } from './../material/material.module';
+import { CreateRequestComponent } from './dialogs/create-request/create-request.component';
+import { CreateQuoteComponent } from './dialogs/create-quote/create-quote.component';
 import { NgPopupsModule } from 'ng-popups';
 import { RouterModule } from '@angular/router';
 import { WINDOW_PROVIDERS } from './helpers/window.helper';
@@ -14,20 +18,23 @@ import { FontSizeDirective } from './directives/font-size.directive';
   declarations: [
     AppLoaderComponent,
     FontSizeDirective,
-    ScrollToDirective
+    ScrollToDirective,
+    CreateQuoteComponent,
+    CreateRequestComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
     NgPopupsModule,
+    MaterialModule
   ],
   exports: [
     AppLoaderComponent,
     FontSizeDirective,
     ScrollToDirective,
-    NgPopupsModule,
+
+    CreateQuoteComponent,
+    CreateRequestComponent
   ],
   providers: [WINDOW_PROVIDERS]
 })
